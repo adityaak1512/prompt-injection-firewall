@@ -161,7 +161,6 @@ def build() -> None:
 
     story = []
 
-    # ---- Title page ----
     story.append(Spacer(1, 1.6 * inch))
     story.append(Paragraph("pif", title_style))
     story.append(Paragraph("A Small Prompt-Injection Firewall", subtitle_style))
@@ -183,7 +182,6 @@ def build() -> None:
     ))
     story.append(PageBreak())
 
-    # ---- 1. The problem ----
     story.append(Paragraph("1. The Problem: What Is “Prompt Injection”?", h1))
     story.append(Paragraph(
         "Modern apps often connect an AI language model (like ChatGPT-style models) to outside "
@@ -222,7 +220,6 @@ def build() -> None:
         "cleverly-worded attack has nowhere to go.", body,
     ))
 
-    # ---- 2. The core idea ----
     story.append(Paragraph("2. The Core Idea: Know Where Text Came From", h1))
     story.append(Paragraph(
         "Think of it like airport security. A guard doesn't try to read every passenger's mind to "
@@ -269,7 +266,6 @@ def build() -> None:
 
     story.append(PageBreak())
 
-    # ---- 3. The five layers ----
     story.append(Paragraph("3. How It's Built: Five Layers", h1))
     story.append(Paragraph(
         "The firewall isn't one big function &mdash; it's five small, independent checks that each "
@@ -337,7 +333,6 @@ def build() -> None:
 
     story.append(PageBreak())
 
-    # ---- 4. Honest results ----
     story.append(Paragraph("4. Does It Actually Work? Honest Numbers", h1))
     story.append(Paragraph(
         "This project includes a small test corpus &mdash; a set of example attacks and example "
@@ -368,7 +363,6 @@ def build() -> None:
         "rewording &mdash; and that's disclosed, not hidden.", body,
     ))
 
-    # ---- 5. What it doesn't do ----
     story.append(Paragraph("5. What This Project Does NOT Protect Against", h1))
     story.append(Paragraph(
         "Stated plainly, so nobody discovers these the hard way:", body,
@@ -386,7 +380,6 @@ def build() -> None:
         "talking.” If that labeling is done wrong, the firewall has no way to know.",
     ]))
 
-    # ---- 6. Project layout ----
     story.append(Paragraph("6. What's in the Repository", h1))
     story.append(Paragraph(
         "The project is a small, dependency-free Python package plus tests, a benchmark, and "
@@ -414,7 +407,6 @@ def build() -> None:
         "python bench/run_bench.py  # the numbers from Section 4, reproduced live"
     ))
 
-    # ---- 7. Credit & closing ----
     story.append(Paragraph("7. Credit and Closing Notes", h1))
     story.append(Paragraph(
         "The five-layer structure, the idea of separating “hard rule” findings from "

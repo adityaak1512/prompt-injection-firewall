@@ -15,9 +15,9 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent))  # so `import corpus` works when run directly
+sys.path.insert(0, str(Path(__file__).parent))
 
-from corpus import ATTACKS, EASY_BENIGN, HARD_BENIGN, Case  # noqa: E402
+from corpus import ATTACKS, EASY_BENIGN, HARD_BENIGN, Case
 
 from pif.context import Context, Origin
 from pif.firewall import Firewall
@@ -37,7 +37,6 @@ def run() -> None:
     firewall = Firewall(Policy())
     latencies: list[float] = []
 
-    # --- detection rate, per class ---
     by_class: dict[str, list[bool]] = defaultdict(list)
     for case in ATTACKS:
         decision, ms = inspect_as_data(firewall, case.text)
@@ -48,7 +47,6 @@ def run() -> None:
     total_attacks = len(ATTACKS)
     total_caught = sum(sum(v) for v in by_class.values())
 
-    # --- false positives ---
     def fpr(cases: tuple[Case, ...]) -> tuple[int, int]:
         flagged = 0
         for case in cases:

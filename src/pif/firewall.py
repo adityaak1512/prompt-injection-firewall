@@ -40,11 +40,6 @@ class Firewall:
         findings: list[Finding] = []
         score = 0
 
-        # normalize's whole point is to reveal what a span *really* says
-        # underneath Unicode tricks and embedded encodings, so ingress has
-        # to scan the normalized reading, not the raw span text — otherwise
-        # a hidden-payload attack sails through ingress untouched even
-        # though normalize already unmasked it.
         normalized_data_text: dict[int, str] = {}
         try:
             if self.policy.layer_on("normalize"):
@@ -75,7 +70,7 @@ class Firewall:
             else:
                 findings.append(_disabled("provenance"))
 
-        except Exception as exc:  # fail closed: a bug is a BLOCK, not a bypass
+        except Exception as exc:
             findings.append(
                 Finding(layer="firewall", rule="layer-error", severity=Severity.CRITICAL, invariant=True, detail=str(exc))
             )

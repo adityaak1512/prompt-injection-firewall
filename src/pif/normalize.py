@@ -36,14 +36,9 @@ _BIDI_CONTROLS = dict.fromkeys(
     ]
 )
 
-# Unicode tag block: U+E0001 and U+E0020-U+E007E mirror ASCII control/printable
-# characters shifted up by 0xE0000. Anything in this range is invisible in
-# virtually every renderer but decodes back to plain ASCII.
 _TAG_BLOCK_LOW = 0xE0000
 _TAG_BLOCK_HIGH = 0xE007F
 
-# A small, deliberately conservative confusables table: common look-alikes
-# seen in real injection attempts, not an attempt at exhaustive coverage.
 _CONFUSABLES = {
     "а": "a", "е": "e", "о": "o", "р": "p", "с": "c", "х": "x", "у": "y",
     "А": "A", "В": "B", "Е": "E", "К": "K", "М": "M", "Н": "H", "О": "O",
@@ -72,7 +67,6 @@ def _strip_tag_block(text: str) -> tuple[str, bool]:
             shifted = cp - _TAG_BLOCK_LOW
             if 0x20 <= shifted <= 0x7E:
                 out.append(chr(shifted))
-            # else: a tag control char with no printable ASCII mirror; drop it
         else:
             out.append(ch)
     return "".join(out), found

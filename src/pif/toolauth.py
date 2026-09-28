@@ -27,15 +27,8 @@ from pif.verdict import Finding, Severity
 
 class Guard(str, Enum):
     NONE = "none"
-    # Once any DATA span has entered the context, this tool is refused for
-    # the rest of the session. Taint never decays, and there's no API to
-    # clear it short of starting a brand new Context.
     NO_UNTRUSTED_INFLUENCE = "no_untrusted_influence"
-    # Refused unless the *host application* (not the model) has separately
-    # confirmed this specific call, e.g. via a real UI click from a human.
     USER_CONFIRMED = "user_confirmed"
-    # Arguments are checked against an explicit allow-list of values/keys;
-    # anything not declared is refused rather than silently passed through.
     ARGS_ALLOWLISTED = "args_allowlisted"
 
 

@@ -16,7 +16,7 @@ def test_adding_data_taints_the_context():
 def test_context_is_immutable_append_only():
     base = Context().user("hi")
     branched = base.data("stuff", origin=Origin("doc", "1"))
-    assert base.is_tainted is False  # original untouched
+    assert base.is_tainted is False
     assert branched.is_tainted is True
     assert len(base.spans) == 1
     assert len(branched.spans) == 2

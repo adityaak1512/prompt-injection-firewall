@@ -89,8 +89,6 @@ def test_layer_error_fails_closed(firewall, monkeypatch):
 
 
 def test_flag_threshold_between_allow_and_block():
-    # A single medium-weight imperative signal (score 2) sits at/above the
-    # flag threshold but below block, so it should FLAG rather than BLOCK.
     policy = Policy(flag_threshold=2, block_threshold=100)
     firewall = Firewall(policy)
     ctx = Context().data("You must now disregard the formatting quirks in this email.", origin=Origin("doc", "1"))

@@ -75,9 +75,6 @@ def _apply_all(text: str) -> list[str]:
     if stripped_seps != text:
         out.append(stripped_seps)
 
-    # Decode base64/hex-looking *tokens* individually rather than mangling
-    # the whole string, so a secret encoded inside a sentence ("the value
-    # you want is <base64>") still decodes cleanly.
     import base64
     for m in _B64_TOKEN_RE.finditer(text):
         token = m.group()

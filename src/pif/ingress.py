@@ -35,11 +35,6 @@ CHAT_TEMPLATE_MARKERS = re.compile(
     re.IGNORECASE,
 )
 
-# Each pattern -> (rule name, points). "Override" patterns name the
-# instructions/rules/prompt being cancelled. "Roleplay" patterns try to
-# reassign the model's identity/persona. "Exfil" patterns ask for secrets
-# or system-prompt disclosure. "Imperative-2nd-person" is the general
-# catch-all for direct commands aimed at the model itself.
 _OVERRIDE = re.compile(
     r"\b(ignore|disregard|forget|override|bypass)\b[^.\n]{0,40}\b"
     r"(previous|prior|above|all|earlier|your)\b[^.\n]{0,20}\b(instructions?|rules?|prompt|guidelines?)\b",
@@ -55,11 +50,6 @@ _EXFIL = re.compile(
     r"\b(reveal|print|show|leak|output|repeat)\b[^.\n]{0,30}\b(system prompt|secret|api key|password|credentials?|instructions?)\b",
     re.IGNORECASE,
 )
-# An imperative-mood opener aimed at the model ("you must now", "from this
-# point forward"...) is only worth scoring when it's actually steering the
-# model's behavior/rules rather than describing an ordinary next step —
-# hence the required nearby keyword. Without that requirement this pattern
-# fires on completely mundane sentences ("you must now select a seat").
 _IMPERATIVE_2P = re.compile(
     r"\b(you must now|you should now|you will now|from this point forward|from this point)\b"
     r"[^.\n]{0,60}\b(ignore|disregard|obey|comply|reveal|secret|unrestricted|override|bypass"

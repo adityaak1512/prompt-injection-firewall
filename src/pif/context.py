@@ -16,9 +16,9 @@ from enum import Enum
 class Trust(str, Enum):
     """The three trust levels a span of text can carry."""
 
-    SYSTEM = "system"  # written by the developer, fully trusted
-    USER = "user"       # typed by the human at the keyboard, trusted to talk about their own request
-    DATA = "data"       # pulled in from anywhere else: a file, a ticket, a web page, a tool result. Never trusted.
+    SYSTEM = "system"
+    USER = "user"
+    DATA = "data"
 
 
 @dataclass(frozen=True)
