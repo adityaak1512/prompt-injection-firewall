@@ -129,7 +129,7 @@ def numbers_table() -> Table:
         ["Measurement", "Result", "What it means"],
         ["Detection rate", "100%\n(27 attacks, 10 kinds)", "Caught every attack in the test set."],
         ["False positives\n(easy sentences)", "0%\n(0 of 10)", "Never blocked an ordinary, harmless sentence."],
-        ["False positives\n(hard sentences)", "5%\n(1 of 10)", "The honest number: even sentences written\nto sound like an attack but aren't are\nmostly let through."],
+        ["False positives\n(hard sentences)", "10%\n(1 of 10)", "The honest number: even sentences written\nto sound like an attack but aren't are\nmostly let through."],
         ["Speed", "~0.03 ms per check", "About 30 millionths of a second —\nfar faster than the AI model itself\nwould take to respond."],
     ]
     t = Table(data, colWidths=[1.5 * inch, 1.5 * inch, 3.4 * inch])

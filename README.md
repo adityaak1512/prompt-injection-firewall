@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![Tests](https://img.shields.io/badge/tests-51%20passing-4457E8?style=flat)](tests/)
 [![Detection](https://img.shields.io/badge/detection-100%25%20%2F%2027%20attacks-6D4AFF?style=flat)](bench/)
-[![Hard benign FPR](https://img.shields.io/badge/hard--benign%20FPR-5.0%25-orange?style=flat)](bench/)
+[![Hard benign FPR](https://img.shields.io/badge/hard--benign%20FPR-10.0%25-orange?style=flat)](bench/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
 > A small, offline, dependency-free firewall that sits between untrusted
@@ -163,7 +163,7 @@ Current numbers on this repo's own corpus (`bench/corpus.py`):
 ```
 detection rate          100.0%   27 attacks across 10 classes
 false positive rate       0.0%   10 easy, ordinary benign sentences
-false positive rate       5.0%   10 "hard" benign sentences that use
+false positive rate      10.0%   10 "hard" benign sentences that use
                                   imperative/override-sounding words
                                   completely innocently
 latency (p50 / p99)     0.03 ms / 0.07 ms
