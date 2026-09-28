@@ -6,15 +6,6 @@
 [![Hard benign FPR](https://img.shields.io/badge/hard--benign%20FPR-10.0%25-orange?style=flat)](bench/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-
-This project is my own build of the idea behind
-[`not-sandboxed` / prompt-injection-firewall](https://github.com/CarterPerez-dev/Cybersecurity-Projects/tree/main/PROJECTS/beginner/prompt-injection-firewall)
-by Carter Perez, reimplemented from scratch, in plain stdlib Python, with
-its own tests and its own benchmark corpus. A plain-language PDF write-up
-of how it works lives in [`docs/report.pdf`](docs/report.pdf).
-
----
-
 ## The idea, in one paragraph
 
 You can't reliably detect prompt injection by reading the words, because
