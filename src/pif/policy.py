@@ -1,10 +1,3 @@
-"""The knobs a developer turns when wiring this firewall into an app.
-
-Deliberately a plain dataclass with plain defaults — no config file
-format, no environment-variable magic. If you want different behavior,
-you construct a different Policy.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field

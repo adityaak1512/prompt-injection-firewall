@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-"""Builds docs/report.pdf — a plain-language write-up of this project.
-
-Not part of the installed `pif` package; this is a one-off documentation
-tool. Requires reportlab:
-
-    pip install reportlab
-    python docs/generate_report.py
-"""
-
 from __future__ import annotations
 
 from pathlib import Path

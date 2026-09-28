@@ -1,22 +1,3 @@
-"""The orchestrator: combines all five layers into one decision.
-
-The rule that ties everything together (the "decision algebra"):
-
-- Any invariant Finding (normalize doesn't produce these; provenance,
-  toolauth, and egress do; ingress never does) forces BLOCK, full stop,
-  regardless of what the policy's score thresholds say.
-- Otherwise, ingress's scored findings are summed and compared against
-  the policy's thresholds: over block_threshold -> BLOCK, over
-  flag_threshold -> FLAG, otherwise -> ALLOW.
-- Any unhandled exception inside a layer is itself turned into a
-  CRITICAL invariant finding, so the firewall fails *closed*. A firewall
-  that fails open on a bug is worse than having no firewall, because it
-  reports success while silently doing nothing.
-- A layer the caller disabled in Policy.enabled_layers still shows up in
-  the findings, as a "layer-disabled" note, so nobody mistakes "nothing
-  fired" for "nothing ran."
-"""
-
 from __future__ import annotations
 
 import time
@@ -80,8 +61,6 @@ class Firewall:
         return Verdict(decision=decision, findings=tuple(findings), elapsed_ms=elapsed_ms)
 
     def render(self, ctx: Context) -> tuple[str, str]:
-        """Returns (rendered_prompt, nonce). Call this only after inspect()
-        has returned something other than BLOCK."""
         nonce = provenance_mod.new_nonce()
         return provenance_mod.render(ctx, nonce), nonce
 

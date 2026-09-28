@@ -1,9 +1,3 @@
-"""Command-line interface: `pif inspect`, `pif egress`, `pif demo`.
-
-Exit status is 0 when the verdict allows (or flags) and 1 when it
-blocks, so this composes in a shell pipeline the same way `grep` does.
-"""
-
 from __future__ import annotations
 
 import argparse

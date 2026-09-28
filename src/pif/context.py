@@ -1,12 +1,3 @@
-"""Trust tracking: where did each piece of text come from?
-
-This is the load-bearing idea of the whole project. Instead of trying to
-guess whether a string is "malicious," we track its *provenance* — was
-it typed by the user, is it the system prompt, or was it pulled in from
-somewhere else (a document, an email, a web page, an API response)? That
-last category is DATA, and DATA is never trusted, no matter what it says.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -14,8 +5,6 @@ from enum import Enum
 
 
 class Trust(str, Enum):
-    """The three trust levels a span of text can carry."""
-
     SYSTEM = "system"
     USER = "user"
     DATA = "data"
@@ -23,12 +12,6 @@ class Trust(str, Enum):
 
 @dataclass(frozen=True)
 class Origin:
-    """Where a DATA span came from, for logging and audits.
-
-    channel: a short label for the kind of source ("ticket", "email", "url")
-    ref: an identifier within that channel (a ticket number, a URL, a filename)
-    """
-
     channel: str
     ref: str = ""
 
@@ -38,8 +21,6 @@ class Origin:
 
 @dataclass(frozen=True)
 class Span:
-    """One piece of text plus the trust level it carries."""
-
     text: str
     trust: Trust
     origin: Origin | None = None
@@ -47,15 +28,6 @@ class Span:
 
 @dataclass(frozen=True)
 class Context:
-    """An immutable, append-only conversation being built up for the model.
-
-    Each `.system()` / `.user()` / `.data()` call returns a *new* Context
-    with one more span appended — nothing is mutated in place. That means
-    `tainted_by` can be a plain computed property instead of a flag someone
-    has to remember to set: it is derived from the spans that exist, so it
-    can never drift out of sync with what's actually in the context.
-    """
-
     spans: tuple[Span, ...] = field(default_factory=tuple)
 
     def system(self, text: str) -> "Context":
@@ -69,13 +41,6 @@ class Context:
 
     @property
     def tainted_by(self) -> tuple[Origin, ...]:
-        """Every DATA origin that has entered this context so far.
-
-        Non-empty means: this conversation has seen untrusted content,
-        and tool authorization should treat it accordingly. There is no
-        way to "clear" this short of building a fresh Context — taint
-        does not decay, on purpose.
-        """
         return tuple(s.origin for s in self.spans if s.trust is Trust.DATA and s.origin is not None)
 
     @property

@@ -1,28 +1,3 @@
-"""Layer 2: ingress. The one layer that guesses, and admits it.
-
-Every other layer in this project enforces a hard rule that doesn't
-depend on reading the text's meaning. This one is different: it looks
-at DATA-trust text and scores how "instruction-shaped" it looks, because
-raising the cost of the easy, copy-pasted attack is worth doing even
-though it can never be complete (see the README's "what this does not
-do" section — a determined attacker can always paraphrase around it).
-
-Two things make it less naive than a plain jailbreak-keyword list:
-
-1. It only ever runs on Trust.DATA spans. The exact same sentence typed
-   by the user ("ignore your previous instructions") is just an ordinary
-   sentence about *their own request* — nobody but the human at the
-   keyboard can instruct the model that way. The identical sentence
-   sitting inside a fetched web page or ticket is an attempt to smuggle
-   a command in disguised as content. Same bytes, different verdict,
-   because the trust label is what changed.
-
-2. It scores multiple independent signals and sums them, rather than
-   returning BLOCK on the first regex hit. A single weak signal (e.g. the
-   word "instructions" appearing at all) isn't enough on its own; several
-   signals stacking up is what pushes a span over the policy threshold.
-"""
-
 from __future__ import annotations
 
 import re
@@ -78,10 +53,6 @@ class IngressResult:
 
 
 def scan(text: str) -> IngressResult:
-    """Scores one span of DATA text. The caller (Firewall) is responsible
-    for only calling this on Trust.DATA spans — this function doesn't see
-    trust levels at all, on purpose, so it can't accidentally be relied on
-    to make a decision it has no business making."""
     findings: list[Finding] = []
     score = 0
     for pattern, rule, severity, points in _RULES:

@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
-"""A standalone, narrated walkthrough you can read top to bottom.
-
-This is the same scenario as `pif demo` (src/pif/demo.py), kept here as a
-separate, copy-pasteable file for anyone who wants to read the whole
-story in one place without installing the package as a CLI. Run with:
-
-    python examples/demo_script.py
-
-Requires only `pip install -e .` (or `-e ".[dev]"`) from the repo root.
-"""
-
 from __future__ import annotations
 
 import base64
@@ -21,7 +10,7 @@ from pif.toolauth import Guard, ToolCall, ToolSpec
 
 SECRET = "VANTAGE-7731-ORION"
 
-print(__doc__)
+print("pif demo walkthrough\n")
 
 policy = Policy(
     canaries=(SECRET,),

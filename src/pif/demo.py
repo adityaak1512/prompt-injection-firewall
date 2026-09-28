@@ -1,11 +1,3 @@
-"""A scripted, self-contained walkthrough of every layer.
-
-No API keys, no network calls, no real LLM — the "model" here is a
-scripted stand-in that always obeys whatever it reads, on purpose,
-so the firewall (not the model's good judgment) is what's being tested.
-Run with `pif demo` or `python -m pif.demo`.
-"""
-
 from __future__ import annotations
 
 from pif.context import Context, Origin
@@ -24,10 +16,6 @@ def _section(title: str) -> None:
 
 
 def gullible_model_reply(rendered_prompt: str) -> str:
-    """Stands in for an LLM that will happily follow any instruction it
-    is shown, including ones smuggled inside DATA. It's deliberately
-    bad at resisting injection, because the firewall is what's supposed
-    to stop the leak — not the model's judgment."""
     if "reveal the secret" in rendered_prompt.lower():
         return f"Sure! The value is {SECRET}"
     return "Your ticket has been reviewed and is on track."

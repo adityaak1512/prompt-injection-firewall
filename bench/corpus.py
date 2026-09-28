@@ -1,20 +1,3 @@
-"""A small labeled corpus for measuring detection rate and false positives.
-
-This is NOT a claim of completeness. It was written by the same person
-who wrote the detection rules, so — as the original inspiration project
-is careful to point out — it mostly measures "does the code catch what
-its author thought of," not "does it catch what an attacker will think
-of." Treat the numbers this produces as a floor, not a ceiling.
-
-Two benign buckets, on purpose:
-- EASY_BENIGN: ordinary sentences with no imperative structure at all.
-- HARD_BENIGN: legitimate operational sentences that use imperative or
-  override-adjacent *words* ("act as", "ignore", "disregard") in a
-  completely innocent way. This is the bucket that actually tests
-  whether the ingress rules are precise, and it's reported separately
-  because averaging it into the easy bucket would hide a bad number.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass

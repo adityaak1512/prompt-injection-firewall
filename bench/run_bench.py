@@ -1,12 +1,4 @@
 #!/usr/bin/env python3
-"""Runs the firewall over the labeled corpus and reports the numbers that
-matter: detection rate per attack class, false-positive rate on easy AND
-hard benign inputs (reported separately — see corpus.py for why), and
-latency. Run with:
-
-    python bench/run_bench.py
-"""
-
 from __future__ import annotations
 
 import statistics

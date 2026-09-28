@@ -1,20 +1,3 @@
-"""Layer 1: normalize. Cleans up sneaky Unicode and encoding tricks.
-
-This layer never decides ALLOW/BLOCK on its own — it just reveals what
-text is *really* saying underneath the disguise, and reports every
-disguise it had to remove. Attackers hide instructions using:
-
-- invisible characters (zero-width spaces, bidi override marks)
-- the Unicode "tag" block (U+E0000-U+E007F), which renders as *nothing*
-  in normal apps but still contains real characters a model can read
-- look-alike letters from other alphabets ("а" Cyrillic vs "a" Latin)
-- one or more layers of encoding (base64, hex, URL-encoding) wrapped
-  around the real payload
-
-Everything here is stdlib-only regex and `unicodedata` — no ML, no
-external services, fully offline.
-"""
-
 from __future__ import annotations
 
 import base64
@@ -88,8 +71,6 @@ def _fold_confusables(text: str) -> tuple[str, bool]:
 
 
 def _try_decode_token(token: str) -> str | None:
-    """Best-effort decode of one token as base64 or hex. Returns None on failure
-    or if the result isn't printable-ish text (avoids corrupting binary noise)."""
     candidates = []
     try:
         padded = token + "=" * (-len(token) % 4)
@@ -113,11 +94,6 @@ def _try_decode_token(token: str) -> str | None:
 
 
 def _decode_embedded_blobs(text: str) -> tuple[str, bool]:
-    """Finds base64/hex-looking substrings embedded in prose and, if they
-    decode to plausible text, appends the decoded reading so later layers
-    can see it too. The original text is preserved (nothing is deleted),
-    because a hidden payload embedded in an otherwise-normal sentence
-    should still trip the layer downstream that inspects the raw text."""
     found = False
     revealed = []
     for pattern in (_B64_TOKEN, _HEX_TOKEN):
@@ -132,10 +108,6 @@ def _decode_embedded_blobs(text: str) -> tuple[str, bool]:
 
 
 def normalize(text: str) -> NormalizeResult:
-    """Runs every de-obfuscation pass to a fixpoint (or _MAX_PASSES),
-    recording a human-readable finding for each transform that actually
-    changed something. Never returns a decision — only a cleaned-up
-    reading and a trail of what had to be cleaned."""
     findings: list[str] = []
     current = text
 
