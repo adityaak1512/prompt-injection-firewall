@@ -72,7 +72,7 @@ than the user — never on what the user themselves typed.
 ## Try it in 60 seconds
 
 ```bash
-git clone <your-fork-url>
+git clone https://github.com/adityaak1512/prompt-injection-firewall.git
 cd prompt-injection-firewall
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
