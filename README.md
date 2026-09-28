@@ -6,11 +6,6 @@
 [![Hard benign FPR](https://img.shields.io/badge/hard--benign%20FPR-10.0%25-orange?style=flat)](bench/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-> A small, offline, dependency-free firewall that sits between untrusted
-> text (documents, tickets, web pages, tool results) and an LLM. Instead
-> of trying to guess whether a piece of text is "malicious" — which is
-> mostly a losing game — it tracks **where every piece of text came
-> from** and enforces a handful of hard rules around the model itself.
 
 This project is my own build of the idea behind
 [`not-sandboxed` / prompt-injection-firewall](https://github.com/CarterPerez-dev/Cybersecurity-Projects/tree/main/PROJECTS/beginner/prompt-injection-firewall)
